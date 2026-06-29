@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Arena</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="menu">
+  <h1>⚔ HERO ARENA ⚔</h1>
+
+  <h3>Chọn nhân vật</h3>
+
+  <button onclick="selectHero('Golden Vampire')">
+    Golden Vampire
+  </button>
+
+  <button onclick="selectHero('Shadow Archer')">
+    Shadow Archer
+  </button>
+
+  <button onclick="selectHero('Curse King')">
+    Curse King
+  </button>
+
+  <br><br>
+
+  <button onclick="startGame()">
+    ▶ Bắt đầu
+  </button>
+</div>
+
+<div id="game" style="display:none">
+
+<div id="hud">
+❤️ <span id="hp">100</span>
+
+������ <span id="mp">100</span>
+
+⭐ <span id="level">1</span>
+
+������ <span id="gold">0</span>
+</div>
+
+<canvas id="canvas"></canvas>
+
+</div>
+
+<script src="game.js"></script>
+
+</body>
+</html>
