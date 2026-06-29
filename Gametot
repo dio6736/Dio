@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Mini Obby</title>
+
+<style>
+body{
+    margin:0;
+    background:#87CEEB;
+    overflow:hidden;
+}
+canvas{
+    display:block;
+    margin:auto;
+    background:#87CEEB;
+}
+</style>
+
+</head>
+<body>
+
+<canvas id="game" width="800" height="450"></canvas>
+
+<script>
+const canvas=document.getElementById("game");
+const ctx=canvas.getContext("2d");
+
+let player={
+x:50,
+y:350,
+w:30,
+h:30,
+vx:0,
+vy:0,
+ground:false
+};
+
+const gravity=0.6;
+
+const blocks=[
+{x:0,y:420,w:800,h:30},
+{x:150,y:350,w:120,h:20},
+{x:340,y:280,w:120,h:20},
+{x:540,y:210,w:120,h:20},
+{x:700,y:150,w:60,h:20}
+];
+
+const keys={};
+
+document.addEventListener("keydown",e=>keys[e.key]=true);
+document.addEventListener("keyup",e=>keys[e.key]=false);
+
+function update(){
+
+if(keys["ArrowLeft"]) player.vx=-4;
+else if(keys["ArrowRight"]) player.vx=4;
+else player.vx=0;
+
+if(keys[" "]&&player.ground){
+player.vy=-12;
+player.ground=false;
+}
+
+player.vy+=gravity;
+
+player.x+=player.vx;
+player.y+=player.vy;
+
+player.ground=false;
+
+for(let b of blocks){
+
+if(player.x<b.x+b.w &&
+player.x+player.w>b.x &&
+player.y+player.h>b.y &&
+player.y+player.h<b.y+20 &&
+player.vy>=0){
+
+player.y=b.y-player.h;
+player.vy=0;
+player.ground=true;
+
+}
+
+}
+
+if(player.y>500){
+player.x=50;
+player.y=350;
+player.vy=0;
+}
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,800,450);
+
+ctx.fillStyle="green";
+for(let b of blocks){
+ctx.fillRect(b.x,b.y,b.w,b.h);
+}
+
+ctx.fillStyle="red";
+ctx.fillRect(player.x,player.y,player.w,player.h);
+
+ctx.fillStyle="gold";
+ctx.fillRect(740,110,20,40);
+
+ctx.fillStyle="black";
+ctx.font="20px Arial";
+ctx.fillText("Đích",730,100);
+
+if(player.x>730&&player.y<140){
+alert("Bạn thắng!");
+player.x=50;
+player.y=350;
+}
+
+}
+
+function game(){
+
+update();
+draw();
+requestAnimationFrame(game);
+
+}
+
+game();
+
+</script>
+
+</body>
+</html>
